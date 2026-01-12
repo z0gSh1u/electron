@@ -1485,6 +1485,9 @@ mainWindow.webContents.setWindowOpenHandler((details) => {
       const browserView = new BrowserView(options)
       mainWindow.addBrowserView(browserView)
       browserView.setBounds({ x: 0, y: 0, width: 640, height: 480 })
+      // `background-tab` dispositions do not supply a `webContents`, so load
+      // the URL manually in that case.
+      if (!options.webContents) browserView.webContents.loadURL(details.url)
       return browserView.webContents
     }
   }
